@@ -1,4 +1,4 @@
-@extends('admin.properties.admin_base')
+@extends('admin.admin_base')
 
 @section( 'title','Les biens')
 

@@ -32,7 +32,8 @@ class PropertyFormRequest extends FormRequest
             'postal_code'=>['required','min:3','integer'],
             'address'=>['required','min:3'],
             'sold'=>['required','boolean'],
-            'floor'=>['required','min:0']
+            'floor'=>['required','min:0'],
+            'options'=>['required','exists:options,id','array']
         ];
     }
 }

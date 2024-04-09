@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\PropertyFormRequest;
+use App\Models\Option;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyFormRequest;
 
 class PropertyController extends Controller
 {
@@ -37,7 +38,7 @@ class PropertyController extends Controller
             'sold'=>false,
             'postal_code'=>'229'
         ]);
-        return view('admin.properties.create',['property'=>$property]);
+        return view('admin.properties.form',['property'=>$property,'options'=>Option::all()]);
     }
 
     /**
@@ -45,16 +46,9 @@ class PropertyController extends Controller
      */
     public function store(PropertyFormRequest $request)
     {
-        Property::create($request->validated());
+        $property=Property::create($request->validated());
+        $property->options()->sync($request->validated('options'));
         return to_route('admin.property.index')->with('success','Le bien a bien été créé');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -62,7 +56,7 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        return view('admin.properties.create',['property'=>$property]);
+        return view('admin.properties.form',['property'=>$property,'options'=>Option::all()]);
     }
 
     /**
@@ -71,6 +65,7 @@ class PropertyController extends Controller
     public function update(PropertyFormRequest $request, Property $property)
     {
         $property->update($request->validated());
+        $property->options()->sync($request->validated('options'));
         return to_route('admin.property.index')->with('success','Le bien a été modifié avec succès');
     }
 
