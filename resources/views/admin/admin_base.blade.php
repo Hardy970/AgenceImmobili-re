@@ -24,18 +24,30 @@
                 <a @class(['nav-link','active'=>str_contains($route, 'property.')]) aria-current="page" href="{{ route('admin.property.index') }}">Gérer les biens</a>
               </li>
               <li class="nav-item">
-                <a @class(['nav-link','active'=>str_contains($route, 'option.')])href="p{{ route('admin.option.index') }}">Gérer les options</a>
+                <a @class(['nav-link','active'=>str_contains($route, 'option.')]) href="{{ route('admin.option.index') }}">Gérer les options</a>
               </li>
             </ul>
+            <div class=" ms-auto ">
+              @auth
+                <ul class=" navbar nav ">
+                  <li class=" nav-item ">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        @method('delete')
+
+                        <button class=" nav-link ">Se déconnecter</button>
+                    </form>
+                  </li>
+                </ul>
+              @endauth
+          </div>
           </div>
         </div>
       </nav>
 
 
     <div class="container mt-5">
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
+       @include('shared.flash')
         @yield('content')
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

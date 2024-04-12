@@ -24,7 +24,7 @@ class PropertyContactRequest extends FormRequest
         return [
             'firstname'=>['required','string','min:2'],
             'lastname'=>['required','string','min:2'],
-            'phone'=>['required','string','min:10'],
+            'phone'=>['required','string','min:8'],
             'email'=>['required','email','min:4'],
             'message'=>['required','string','min:4']
         ];
