@@ -13,7 +13,7 @@ class PropertiesController extends Controller
 {
     public function index(SearchPropertiesRequest $request)
     {
-        $query=Property::query()->orderBy('created_at','desc');
+        $query=Property::query()->available()->recent();
         //si l'utilisateur a entré un prix maximal ajouter la condition
         if($request->validated('price')){
         $query->where('price','<=',$request->validated('price'));
